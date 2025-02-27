@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "bootstrap/dist/css/bootstrap.min.css";
-import LoanApplicationForm from "./LoanApplicationForm";
 
 const Dashboard = () => {
   const [loanType, setLoanType] = useState("secured");
-  const [showForm, setShowForm] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate function
 
   return (
     <div className="container-fluid">
@@ -30,34 +30,34 @@ const Dashboard = () => {
 
         {/* Main Content */}
         <main className="col-md-9 col-lg-10 ms-auto p-4 bg-light">
-          {!showForm ? (
-            <>
-              <h1 className="fw-bold">Welcome to Your Dashboard</h1>
-              <p className="text-muted">Manage your loans and view your application history.</p>
+          <h1 className="fw-bold">Welcome to Your Dashboard</h1>
+          <p className="text-muted">Manage your loans and view your application history.</p>
 
-              {/* Loan Category Selection */}
-              <div className="mt-4">
-                <button className={`btn ${loanType === "secured" ? "btn-info" : "btn-outline-info"} me-2`} onClick={() => setLoanType("secured")}>Secured Loan</button>
-                <button className={`btn ${loanType === "unsecured" ? "btn-info" : "btn-outline-info"}`} onClick={() => setLoanType("unsecured")}>Unsecured Loan</button>
-              </div>
+          {/* Loan Category Selection */}
+          <div className="mt-4">
+            <button className={`btn ${loanType === "secured" ? "btn-info" : "btn-outline-info"} me-2`} onClick={() => setLoanType("secured")}>
+              Secured Loan
+            </button>
+            <button className={`btn ${loanType === "unsecured" ? "btn-info" : "btn-outline-info"}`} onClick={() => setLoanType("unsecured")}>
+              Unsecured Loan
+            </button>
+          </div>
 
-              {/* Loan Type Sections */}
-              <div className="card mt-4">
-                <div className="card-body">
-                  <h5 className="card-title">{loanType === "secured" ? "Secured Loans" : "Unsecured Loans"}</h5>
-                  <ul className="list-group">
-                    <li className="list-group-item">Business Loan</li>
-                    <li className="list-group-item">Personal Loan</li>
-                  </ul>
-                </div>
-              </div>
+          {/* Loan Type Sections */}
+          <div className="card mt-4">
+            <div className="card-body">
+              <h5 className="card-title">{loanType === "secured" ? "Secured Loans" : "Unsecured Loans"}</h5>
+              <ul className="list-group">
+                <li className="list-group-item">Business Loan</li>
+                <li className="list-group-item">Personal Loan</li>
+              </ul>
+            </div>
+          </div>
 
-              {/* Apply for Loan Button */}
-              <button className="btn btn-success mt-4" onClick={() => setShowForm(true)}>Apply for a Loan</button>
-            </>
-          ) : (
-            <LoanApplicationForm />
-          )}
+          {/* Apply for Loan Button */}
+          <button className="btn btn-success mt-4" onClick={() => navigate("/loan-application")}>
+            Apply for a Loan
+          </button>
         </main>
       </div>
     </div>
