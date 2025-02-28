@@ -4,8 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const LoanApplicationForm = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const [aadhaarFile, setAadhaarFile] = useState(null);
-  const [panFile, setPanFile] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
@@ -15,15 +13,11 @@ const LoanApplicationForm = () => {
 
   const handlePopupClose = () => {
     setShowPopup(false);
-    navigate("/dashboard");
+    navigate("/upload-documents"); // Redirect to document upload page
   };
 
-  // Handle file selection
-  const handleFileChange = (event, setFile) => {
-    const file = event.target.files[0];
-    if (file) {
-      setFile(file);
-    }
+  const handleBack = () => {
+    navigate("/dashboard"); // Redirect to Dashboard
   };
 
   return (
@@ -34,80 +28,42 @@ const LoanApplicationForm = () => {
             <h3 className="fw-bold text-center mb-4">Loan Application Form</h3>
 
             <form onSubmit={handleSubmit}>
-              <div className="row">
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">Loan Category</label>
-                  <select className="form-select">
-                    <option>Business Loan</option>
-                    <option>Personal Loan</option>
-                  </select>
-                </div>
-
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">Loan Amount</label>
-                  <input type="number" className="form-control" placeholder="Enter amount" required />
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">Loan Term (Months/Years)</label>
-                  <input type="text" className="form-control" placeholder="e.g. 12 months" required />
-                </div>
-
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">Income Details (Optional)</label>
-                  <input type="text" className="form-control" placeholder="Enter income details" />
-                </div>
+              <div className="mb-3">
+                <label className="form-label fw-bold">Loan Category</label>
+                <select className="form-select">
+                  <option>Business Loan</option>
+                  <option>Personal Loan</option>
+                </select>
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Purpose of Loan</label>
-                <textarea className="form-control" rows="3" placeholder="Explain the purpose of the loan" required></textarea>
+                <label className="form-label fw-bold">Loan Amount</label>
+                <input type="number" className="form-control" placeholder="Enter amount" required />
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Collateral Details</label>
-                <input type="text" className="form-control" placeholder="Enter collateral details (if any)" />
+                <label className="form-label fw-bold">Loan Term (Months/Years)</label>
+                <input type="text" className="form-control" placeholder="e.g. 12 months" required />
               </div>
 
-              {/* Aadhaar Upload */}
               <div className="mb-3">
-                <label className="form-label">Upload Aadhaar Card (PDF/Image)</label>
-                <input 
-                  type="file" 
-                  className="form-control" 
-                  accept="image/*,.pdf" 
-                  onChange={(e) => handleFileChange(e, setAadhaarFile)}
-                  required
-                />
-                {aadhaarFile && (
-                  <div className="mt-2">
-                    <strong>Selected File:</strong> {aadhaarFile.name}
-                  </div>
-                )}
+                <label className="form-label fw-bold">Purpose of Loan</label>
+                <textarea className="form-control" rows="3" required></textarea>
               </div>
 
-              {/* PAN Upload */}
               <div className="mb-3">
-                <label className="form-label">Upload PAN Card (PDF/Image)</label>
-                <input 
-                  type="file" 
-                  className="form-control" 
-                  accept="image/*,.pdf" 
-                  onChange={(e) => handleFileChange(e, setPanFile)}
-                  required
-                />
-                {panFile && (
-                  <div className="mt-2">
-                    <strong>Selected File:</strong> {panFile.name}
-                  </div>
-                )}
+                <label className="form-label fw-bold">Income Details (Optional)</label>
+                <input type="text" className="form-control" />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label fw-bold">Collateral Details</label>
+                <input type="text" className="form-control" />
               </div>
 
               {/* Buttons */}
               <div className="d-flex justify-content-between">
-                <button type="button" className="btn btn-outline-secondary px-4" onClick={() => navigate("/dashboard")}>
+                <button type="button" className="btn btn-outline-secondary px-4" onClick={handleBack}>
                   Back
                 </button>
                 <button type="submit" className="btn btn-success px-4">
@@ -130,10 +86,11 @@ const LoanApplicationForm = () => {
               </div>
               <div className="modal-body text-center">
                 <p className="fw-bold">Your loan application has been submitted successfully!</p>
+                <p className="text-muted">Now, please upload your Aadhaar & PAN card.</p>
               </div>
               <div className="modal-footer justify-content-center">
                 <button type="button" className="btn btn-primary px-4" onClick={handlePopupClose}>
-                  OK
+                  Upload Documents
                 </button>
               </div>
             </div>

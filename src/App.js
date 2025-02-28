@@ -4,6 +4,7 @@ import Login from "./Login";
 import Dashboard from "./Dashboard";
 import Loanscreen from "./Loanscreen";
 import LoanApplicationForm from "./LoanApplicationForm";
+import DocumentUpload from "./DocumentUpload"; // Import DocumentUpload page
 
 const App = () => {
   const token = localStorage.getItem("authToken"); // Check if user is logged in
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={token ? <Dashboard /> : <Navigate to="/login" />} />
         <Route path="/loan-application" element={token ? <LoanApplicationForm /> : <Navigate to="/login" />} />
+        <Route path="/upload-documents" element={<DocumentUpload />} />
         <Route path="/loanscreen" element={token ? <Loanscreen /> : <Navigate to="/login" />} />
         {/* Redirect unknown routes */}
         <Route path="*" element={<Navigate to={token ? "/dashboard" : "/login"} />} />
